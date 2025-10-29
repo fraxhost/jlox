@@ -6,9 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
-public class Jlox {
+public class Lox {
     static boolean hadError = false;
 
     public static void main(String[] args) throws IOException {
@@ -36,7 +35,7 @@ public class Jlox {
         BufferedReader reader = new BufferedReader(input);
 
         while(true) {
-            System.out.println("> ");
+            System.out.print("> ");
             String line = reader.readLine();
             if (line == null) break;
             run(line);
@@ -48,9 +47,13 @@ public class Jlox {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
 
-        for (Token token : tokens) {
-            System.out.println(token);
-        }
+        Parser parser = new Parser(tokens);
+        Expr expression = parser.parse();
+
+        // Stop if there was a syntax error.
+        if (hadError) return;
+
+        System.out.println(new AstPrinter().print(expression));
     }
 
     static void error(int line, String message) {
@@ -61,5 +64,13 @@ public class Jlox {
         System.err.println(
             "[line " + line + "] Error" + where + ": " + message
         );
+    }
+
+    static void error(Token token, String message) {
+        if (token.type == TokenType.EOF) {
+            report(token.line, " at end", message);
+        } else {
+            report(token.line, " at '" + token.lexeme + "'", message);
+        }
     }
 }

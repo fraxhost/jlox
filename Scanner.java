@@ -35,14 +35,14 @@ public class Scanner {
         keywords.put("while",  TokenType.WHILE);
     }
 
-    List<Token> scanTokens() {
+    public List<Token> scanTokens() {
         while (!isAtEnd()) {
-            // Scan next token
-            // This is a placeholder for actual scanning logic
-            tokens.add(new Token(TokenType.EOF, "", null, 1));
+            // We are at the beginning of the next lexeme.
+            start = current;
+            scanToken();
         }
         
-        tokens.add(new Token(TokenType.EOF, "", null, 1));
+        tokens.add(new Token(TokenType.EOF, "", null, line));
         return tokens;
     }
 
@@ -112,11 +112,11 @@ public class Scanner {
             case '"':
                 string();
                 break;
-            case 'o':
-                if (match('r')) {
-                    addToken(TokenType.OR);
-                }
-                break;
+            // case 'o':
+            //     if (match('r')) {
+            //         addToken(TokenType.OR);
+            //     }
+            //     break;
             default:
                 if (isDigit(c)) {
                     number();
@@ -125,7 +125,7 @@ public class Scanner {
                     identifier();
                 }
                 else {
-                    Jlox.error(line, "Unexpected character.");
+                    Lox.error(line, "Unexpected character.");
                 }
                 break;
         }
@@ -164,7 +164,7 @@ public class Scanner {
         }
 
         if (isAtEnd()) {
-            Jlox.error(line, "Unterminated string.");
+            Lox.error(line, "Unterminated string.");
             return;
         }
 
@@ -187,8 +187,7 @@ public class Scanner {
             while (isDigit(peek())) advance();
         }
 
-        String numberString = source.substring(start, current);
-        addToken(TokenType.NUMBER, Double.parseDouble(numberString));
+        addToken(TokenType.NUMBER, Double.parseDouble(source.substring(start, current)));
     }
 
     private void identifier() {
@@ -200,7 +199,7 @@ public class Scanner {
             type = TokenType.IDENTIFIER;
         }
 
-        addToken(TokenType.IDENTIFIER);
+        addToken(type);
     }
 
     private boolean isDigit(char c) {
