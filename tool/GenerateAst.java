@@ -4,14 +4,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class GenerateAst {
-    public static void main(String[] args) throws IOException{
+
+    public static void main(String[] args) throws IOException {
         if (args.length != 1) {
             System.err.println("Usage: generate_ast <output directory>");
             System.exit(64);
         }
         String outputDir = args[0];
 
-        defineAst(outputDir, "Expr", new String[] {
+        defineAst(outputDir, "Expr", new String[]{
             "Assign   : Token name, Expr value",
             "Binary   : Expr left, Token operator, Expr right",
             "Call     : Expr callee, Token paren, List<Expr> arguments",
@@ -25,10 +26,10 @@ public class GenerateAst {
         defineAst(outputDir, "Stmt", new String[]{
             "Block      : List<Stmt> statements",
             "Expression : Expr expression",
-            "Function   : Token name, List<Token> params," +
-                  " List<Stmt> body",
-            "If         : Expr condition, Stmt thenBranch," +
-                  " Stmt elseBranch",
+            "Function   : Token name, List<Token> params,"
+            + " List<Stmt> body",
+            "If         : Expr condition, Stmt thenBranch,"
+            + " Stmt elseBranch",
             "Print      : Expr expression",
             "Return     : Token keyword, Expr value",
             "Var        : Token name, Expr initializer",
@@ -37,7 +38,7 @@ public class GenerateAst {
     }
 
     private static void defineAst(
-        String outputDir, String baseName, String[] types
+            String outputDir, String baseName, String[] types
     ) throws IOException {
         String path = outputDir + "/" + baseName + ".java";
         PrintWriter writer = new PrintWriter(path, "UTF-8");
@@ -66,11 +67,11 @@ public class GenerateAst {
     }
 
     private static void defineType(
-        PrintWriter writer, String baseName,
-        String className, String fieldList
+            PrintWriter writer, String baseName,
+            String className, String fieldList
     ) {
-        writer.println("    static class " + className + " extends " +
-            baseName + " {");
+        writer.println("    static class " + className + " extends "
+                + baseName + " {");
 
         // Constructor.
         writer.println("        " + className + "(" + fieldList + ") {");
@@ -88,8 +89,8 @@ public class GenerateAst {
         writer.println();
         writer.println("        @Override");
         writer.println("        <R> R accept(Visitor<R> visitor) {");
-        writer.println("            return visitor.visit" +
-            className + baseName + "(this);");
+        writer.println("            return visitor.visit"
+                + className + baseName + "(this);");
         writer.println("        }");
 
         // Fields.
@@ -101,15 +102,15 @@ public class GenerateAst {
     }
 
     private static void defineVisitor(
-        PrintWriter writer, String baseName, String[] types
+            PrintWriter writer, String baseName, String[] types
     ) {
         writer.println("    interface Visitor<R> {");
 
         for (String type : types) {
             String typeName = type.split(":")[0].trim();
             writer.println(
-                "        R visit" + typeName + baseName + "(" +
-                typeName + " " + baseName.toLowerCase() + ");"
+                    "        R visit" + typeName + baseName + "("
+                    + typeName + " " + baseName.toLowerCase() + ");"
             );
         }
 
