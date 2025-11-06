@@ -138,11 +138,3 @@ Language: Lox (tree-walking interpreter, Chapters 1-13)
 MIT (or include your own)
 
 ---
-
-If you want me to:
-
-✅ add example `.lox` programs
-✅ add build & test section (Scala tests / JUnit / MUnit)
-✅ add GitHub badges (build, license, etc.)
-
-Just tell me: **"add examples"**, **"add CI section"**, etc.
