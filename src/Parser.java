@@ -1,3 +1,4 @@
+package src;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -168,7 +169,6 @@ public class Parser {
             } while (match(TokenType.COMMA));
         }
         consume(TokenType.RIGHT_PAREN, "Expect ')' after parameters.");
-
         consume(TokenType.LEFT_BRACE, "Expect '{' before " + kind + " body.");
         List<Stmt> body = block();
         return new Stmt.Function(name, parameters, body);

@@ -1,14 +1,64 @@
-Run the code -
+# Lox Interpreter (Java)
 
-1. javac file_name.java
-2. java file_name
+An implementation of the **Lox** language from the book *Crafting Interpreters* by Robert Nystrom.
+This project includes a full tree-walking interpreter, AST generator, and support for classes, inheritance, recursion, etc.
 
-Run the AST
+---
 
-1. javac tool/AST
-2. java tool/AST .
+## 📁 Project Structure
 
-Grammar
+```
+root_directory/
+│
+├── src/
+│   ├── Lox.java          # Entry point for the interpreter
+│   ├── ...               # Scanner, Parser, Resolver, Interpreter, etc.
+│
+├── tool/
+│   ├── AST.java          # AST generator tool
+│
+├── tests/             # Optional .lox programs
+│
+└── README.md
+```
+
+---
+
+## ▶️ Running the Interpreter
+
+### 1. Compile
+
+```sh
+cd root_directory
+javac src/Lox.java
+```
+
+### 2. Run Interactively (REPL)
+
+```sh
+java src/Lox
+```
+
+### 3. Run a `.lox` Source File
+
+```sh
+java src/Lox path/to/file.lox
+```
+
+---
+
+## 🛠️ Running the AST Generator
+
+```sh
+javac tool/AST.java
+java tool/AST .
+```
+
+The final `.` means “generate classes in the current directory”.
+
+---
+
+## 📜 Grammar Specification
 
 ```
 program        → declaration* EOF ;
@@ -59,5 +109,40 @@ STRING         → "\"" <any char except "\"">* "\"" ;
 IDENTIFIER     → ALPHA ( ALPHA | DIGIT )* ;
 ALPHA          → "a" ... "z" | "A" ... "Z" | "_" ;
 DIGIT          → "0" ... "9" ;
-
 ```
+
+---
+
+## ✅ Supported Features
+
+* Arithmetic, boolean logic, grouping
+* Variables + lexical scoping
+* `if`, `while`, `for`, `return`
+* Functions, closures, recursion
+* Classes, fields, `this`
+* Inheritance + `super`
+* Logical operators (`and`, `or`)
+* REPL and source-file execution
+
+---
+
+## 📚 Reference
+
+Book: [https://craftinginterpreters.com](https://craftinginterpreters.com)
+Language: Lox (tree-walking interpreter, Chapters 1-13)
+
+---
+
+## 📌 License
+
+MIT (or include your own)
+
+---
+
+If you want me to:
+
+✅ add example `.lox` programs
+✅ add build & test section (Scala tests / JUnit / MUnit)
+✅ add GitHub badges (build, license, etc.)
+
+Just tell me: **"add examples"**, **"add CI section"**, etc.

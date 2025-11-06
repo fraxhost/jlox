@@ -1,8 +1,13 @@
-var a = 0;
-var temp;
+var n = 5;
 
-for (var b = 1; a < 10000; b = temp + b) {
-  print a;
-  temp = a;
-  a = b;
+if (n > 3) {
+  print "Greater than 3";
+} else {
+  print "Less or equal 3";
+}
+
+var i = 0;
+while (i < 3) {
+  print i;
+  i = i + 1;
 }

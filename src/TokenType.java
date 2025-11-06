@@ -1,3 +1,4 @@
+package src;
 
 public enum TokenType {
     // Single-character tokens.
